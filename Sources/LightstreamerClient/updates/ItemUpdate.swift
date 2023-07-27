@@ -196,12 +196,17 @@ class ItemUpdate2Level: ItemUpdate {
     }
     
     var changedFields: [String : String?] {
-        guard m_fields != nil && m_fields2 != nil else {
+        guard let fields = m_fields else {
             preconditionFailure(NO_FIELDS)
         }
         var res = [String:String?]()
         for fieldPos in m_changedFields {
-            res[getFieldNameFromIdx(fieldPos)] = toString(m_newValues[fieldPos] ?? nil)
+            let field = fields[fieldPos]
+            if (field != nil) {
+                res[field!] = toString(m_newValues[fieldPos] ?? nil)
+            } else {
+                print("no field \(fieldPos) for update found.")
+            }
         }
         return res
     }
