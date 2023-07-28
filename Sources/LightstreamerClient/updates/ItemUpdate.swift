@@ -63,7 +63,12 @@ class ItemUpdateBase: ItemUpdate {
         }
         var res = [String:String?]()
         for fieldPos in m_changedFields {
-            res[fields[fieldPos]!] = toString(m_newValues[fieldPos] ?? nil)
+            let field = fields[fieldPos]
+            if (field != nil) {
+                res[field!] = toString(m_newValues[fieldPos] ?? nil)
+            } else {
+                print("no field \(fieldPos) for update found.")
+            }
         }
         return res
     }
